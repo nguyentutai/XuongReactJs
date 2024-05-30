@@ -1,0 +1,65 @@
+import { useParams } from 'react-router-dom'
+import styles from './productform.module.scss'
+import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import instance from '../../../axios';
+
+const ProductForm = ({ addPro, editPro }) => {
+    const { id } = useParams();
+    const {
+        register,
+        reset,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    if (id) {
+        useEffect(() => {
+            (async () => {
+                try {
+                    const { data } = await instance.get('/products/' + id)
+                    reset(data)
+                } catch (error) {
+                    console.log(error)
+                }
+            })();
+        }, [id])
+    }
+    const submit = (data) => {
+        if (id)
+            editPro(id, data)
+        else
+            addPro(data)
+    }
+    return (
+        <div className={styles.form} >
+            <form className="w-full" onSubmit={handleSubmit(submit)}>
+                <h3 className="text-left mb-4 text-black">{id ? 'Sửa sản phẩm' : 'Thêm sản phẩm'}</h3>
+                <div className="mb-2">
+                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Tên sản phẩm</label>
+                    <input type="text" id="name" {...register('title', {
+                        required: "Vui long nhap trường nay",
+                        minLength: {
+                            value: 6,
+                            message: "Do dai lon hon 6"
+                        }
+                    })} className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder='Tên sản phẩm' />
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-500"><span className="font-medium"></span>{errors?.title?.message}</p>
+                </div>
+                <div className="mb-2">
+                    <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Giá sản phẩm</label>
+                    <input type="number" id="price" {...register('price')} className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder='Giá sản phẩm' />
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-500"><span className="font-medium"></span></p>
+                </div>
+                <div className="mb-2">
+                    <label htmlFor="repeat-des" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Mô tả sản phẩm</label>
+                    <textarea type="text" id="repeat-des" {...register('description')} className="shadow-sm min-h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder='Mô tả sản phẩm' />
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-500"><span className="font-medium"></span>{errors?.description?.message}</p>
+                </div>
+                <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            </form>
+        </div>
+    )
+}
+
+export default ProductForm
