@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Login from "./pages/Login";
 import Notfound from "./pages/Notfound";
 import instance from "./axios";
 import ListProduct from "./pages/admin/ListProduct/ListProducts";
 import ProductForm from "./pages/admin/ProductForm/ProductForm";
 import LayoutWebsite from "./components/LayoutWebsite";
 import LayoutAdmin from "./components/LayoutAdmin";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
 
 function App() {
 	const navigate = useNavigate()
@@ -73,6 +72,7 @@ function App() {
 						<Route path="home" element={<Navigate to="/" />} />
 						<Route path="about" element={<About />} />
 						<Route path="login" element={<Login />} />
+						<Route path="register" element={<Register />} />
 					</Route>
 					<Route path="admin" element={<LayoutAdmin />}>
 						<Route path='' element={<ListProduct data={products} deletePro={handleDelete} />} />

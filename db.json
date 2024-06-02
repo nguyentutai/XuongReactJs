@@ -552,5 +552,6 @@
 				"https://cdn.dummyjson.com/product-images/30/thumbnail.jpg"
 			]
 		}
-	]
+	],
+	"users": []
 }
