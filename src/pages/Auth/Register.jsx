@@ -1,8 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import instance from '../../axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -11,11 +13,17 @@ export default function Register() {
     } = useForm();
 
     const onSubmit = async (value) => {
-        const { data } = await instance.post('/register', {
-            email: value.email,
-            password: value.password
-        })
-        console.log(data)
+        (async () => {
+            try {
+                const res = await instance.post(`/register`, value);
+                if(res.status == 201 ){
+                    alert('Đăng ký tài khoản thành công')
+                    navigate('/login')
+                }
+            } catch (error) {
+                alert('Email đã tồn tại')
+            }
+        })();
     }
 
     return (
