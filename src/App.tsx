@@ -9,7 +9,7 @@ import Register from "./pages/Auth/Register";
 import LayoutAdmin from "./components/LayoutAdmin";
 import ListProduct from "./pages/admin/Listproduct/ListProducts";
 import ProductForm from "./pages/admin/ProductForm/ProductForm";
-import { Notfound } from "./pages/Notfound";
+import Notfound from "./pages/Notfound";
 import IProducts from "./interfaces/IProducts";
 
 
