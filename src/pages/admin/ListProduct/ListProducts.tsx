@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
 import styles from './listpro.module.scss'
-const ListProduct = ({ data, deletePro }) => {
+import IProducts from '../../../interfaces/IProducts'
+interface IProps {
+    data: IProducts[],
+    deletePro(id: number | string): void
+}
+const ListProduct = (props: IProps) => {
     return (
         <div className="container">
             <div className="bg-blue-700 w-44 text-center py-[9px] rounded mb-1">
@@ -31,7 +36,7 @@ const ListProduct = ({ data, deletePro }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((product, index) => (
+                        {props?.data?.map((product: IProducts, index: number) => (
                             <tr key={index} className={styles.table_header}>
                                 <td className="px-6 py-4">
                                     {index}
@@ -51,8 +56,8 @@ const ListProduct = ({ data, deletePro }) => {
                                 <td className="px-6 py-4 flex mt-[30px]">
                                     <Link to={`product-form/${product.id}`} className="bg-blue-600 px-2 py-1 ms-2 rounded text-white no-underline">Edit</Link>
                                     <button className="bg-red-600 px-2 py-1 ms-2 rounded text-white" onClick={() => {
-                                        if(confirm("Are you sure you want to")){
-                                            deletePro(product.id);
+                                        if (confirm("Are you sure you want to")) {
+                                            props.deletePro(product.id!);
                                         }
                                     }}>Xóa</button>
                                 </td>

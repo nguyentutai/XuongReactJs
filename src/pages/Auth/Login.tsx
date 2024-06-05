@@ -1,7 +1,7 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import instance from '../../axios';
 import { useNavigate } from 'react-router-dom';
+import IUser from '../../interfaces/IUser';
 
 export default function Login() {
     const navigate = useNavigate()
@@ -9,9 +9,9 @@ export default function Login() {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm();
+    } = useForm<IUser>();
 
-    const onSubmit = async (value) => {
+    const onSubmit = async (value: IUser) => {
         (async () => {
             try {
                 const res = await instance.post(`/login`, value);

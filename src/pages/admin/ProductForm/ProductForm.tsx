@@ -3,15 +3,21 @@ import styles from './productform.module.scss'
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import instance from '../../../axios';
+import IProducts from '../../../interfaces/IProducts';
 
-const ProductForm = ({ addPro, editPro }) => {
+interface IProps {
+    addPro?: (data: IProducts) => void,
+    editPro?: (id: number | string, data: IProducts) => void,
+}
+
+const ProductForm = (props: IProps) => {
     const { id } = useParams();
     const {
         register,
         reset,
         handleSubmit,
         formState: { errors }
-    } = useForm();
+    } = useForm<IProducts>();
 
     if (id) {
         useEffect(() => {
@@ -25,11 +31,11 @@ const ProductForm = ({ addPro, editPro }) => {
             })();
         }, [id])
     }
-    const submit = (data) => {
+    const submit = (data: IProducts) => {
         if (id)
-            editPro(id, data)
+            props.editPro!(id, data)
         else
-            addPro(data)
+            props.addPro!(data)
     }
     return (
         <div className={styles.form} >
@@ -48,7 +54,7 @@ const ProductForm = ({ addPro, editPro }) => {
                 </div>
                 <div className="mb-2">
                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Giá sản phẩm</label>
-                    <input type="number" id="price" {...register('price',{
+                    <input type="number" id="price" {...register('price', {
                         required: "Vui lòng nhập vào giá sản phẩm",
                         min: {
                             value: 0,
@@ -59,7 +65,7 @@ const ProductForm = ({ addPro, editPro }) => {
                 </div>
                 <div className="mb-2">
                     <label htmlFor="repeat-des" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Mô tả sản phẩm</label>
-                    <textarea type="text" id="repeat-des" {...register('description',{
+                    <textarea id="repeat-des" {...register('description', {
                         required: "Vui lòng nhập mô tả của sản phẩm"
                     })} className="shadow-sm min-h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder='Mô tả sản phẩm' />
                     <p className="mt-1 text-sm text-red-600 dark:text-red-500"><span className="font-medium"></span>{errors?.description?.message}</p>

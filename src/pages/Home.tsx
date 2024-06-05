@@ -1,10 +1,15 @@
-import React from "react";
+import IProducts from "../interfaces/IProducts";
 
-function Home({ data }) {
+
+interface IProps {
+	data: IProducts[]
+}
+
+function Home(props :IProps) {
 	return (
 		<>
 			<h1>Danh sach san pham</h1>
-			{data.map((product) => (
+			{props.data.map((product) => (
 				<div key={product.id} className="card">
 					<img src={product.thumbnail} alt="" />
 					<h2>{product.name}</h2>
