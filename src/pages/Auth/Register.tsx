@@ -3,7 +3,6 @@ import instance from '../../axios';
 import { useNavigate } from 'react-router-dom';
 import IUser from '../../interfaces/IUser';
 
-
 export default function Register() {
     const navigate = useNavigate()
     const {
@@ -29,7 +28,7 @@ export default function Register() {
 
     return (
         <div className="mt-[100px]">
-            <h4 className="w-[120px] mx-auto text-center py-1 text-black rounded">Register</h4>
+            <h4 className="w-[120px] mx-auto text-center py-1 text-white rounded bg-gray-800">Register</h4>
             <form className="max-w-sm mx-auto" onSubmit={handleSubmit(onSubmit)}>
                 <div className="">
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Your email</label>
