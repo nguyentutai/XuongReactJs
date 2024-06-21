@@ -1,24 +1,6 @@
 {
   "products": [
     {
-      "id": 2,
-      "title": "iPhone X",
-      "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-      "price": 899,
-      "discountPercentage": 17.94,
-      "rating": 4.44,
-      "stock": 34,
-      "brand": "Apple",
-      "category": "smartphones",
-      "thumbnail": "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg",
-      "images": [
-        "https://cdn.dummyjson.com/product-images/2/1.jpg",
-        "https://cdn.dummyjson.com/product-images/2/2.jpg",
-        "https://cdn.dummyjson.com/product-images/2/3.jpg",
-        "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg"
-      ]
-    },
-    {
       "id": 3,
       "title": "Samsung Universe 9",
       "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
@@ -462,7 +444,7 @@
       "id": 27,
       "title": "Flying Wooden Bird",
       "description": "Package Include 6 Birds with Adhesive Tape Shape: 3D Shaped Wooden Birds Material: Wooden MDF, Laminated 3.5mm",
-      "price": 51,
+      "price": "51111",
       "discountPercentage": 15.58,
       "rating": 4.41,
       "stock": 17,
@@ -540,6 +522,18 @@
       "password": "$2a$10$vI/ZXxKlpB1sQDssaZoU9eADrJDpV82kexWf2p.te24KwtnBOQsQG",
       "confirmPass": "tai19062004",
       "id": 1
+    },
+    {
+      "email": "taintph36690@fpt.edu.vn",
+      "password": "$2a$10$KImnMvobDWMSvu6QGsptYeBrFA3LbuJ/hmPuBqW8DoWiQ1hKVwke.",
+      "confirmPass": "tai19062004",
+      "id": 2
+    },
+    {
+      "email": "taintph36690@fpt.edu.vn1",
+      "password": "$2a$10$5TA.y./Nx2yvF7V62QqMru5NJZv9RB1V3moF4n.0cDJ9r1lOgDMby",
+      "confirmPass": "1111111",
+      "id": 3
     }
   ]
 }

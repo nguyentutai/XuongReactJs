@@ -1,17 +1,17 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import styles from './productform.module.scss'
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import instance from '../../../axios';
 import IProducts from '../../../interfaces/IProducts';
+import { ProductContext } from '../../../contexts/ProductProvider';
 
-interface IProps {
-    addPro?: (data: IProducts) => void,
-    editPro?: (id: number | string, data: IProducts) => void,
-}
 
-const ProductForm = (props: IProps) => {
+
+const ProductForm = () => {
     const { id } = useParams();
+    const { dispathProducts } = useContext(ProductContext)
+    const navigate = useNavigate();
     const {
         register,
         reset,
@@ -32,10 +32,37 @@ const ProductForm = (props: IProps) => {
         }, [id])
     }
     const submit = (data: IProducts) => {
-        if (id)
-            props.editPro!(id, data)
-        else
-            props.addPro!(data)
+        if (id) {
+            fetch('http://localhost:3000/products/' + id, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }).then((res) => res.json().then(data => {
+                dispathProducts({
+                    type: "UPDATE_PRODUCT",
+                    payload: data
+                })
+            }))
+            alert('Cập nhật sản phẩm thành công')
+            navigate('/admin')
+        } else {
+            fetch('http://localhost:3000/products', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }).then((res) => res.json().then(data => {
+                dispathProducts({
+                    type: "ADD_PRODUCT",
+                    payload: data
+                })
+                alert("Thêm sản phẩm thành công")
+            }))
+            navigate('/admin')
+        }
     }
     return (
         <div className={styles.form} >

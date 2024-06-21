@@ -2,8 +2,11 @@ import { useForm } from 'react-hook-form';
 import instance from '../../axios';
 import { useNavigate } from 'react-router-dom';
 import IUser from '../../interfaces/IUser';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 export default function Login() {
+    const {  dispatchUser } = useContext(AuthContext)
     const navigate = useNavigate()
     const {
         register,
@@ -16,8 +19,12 @@ export default function Login() {
             try {
                 const res = await instance.post(`/login`, value);
                 if (res.status == 200) {
+                    localStorage.setItem('user', JSON.stringify(res.data));
+                    dispatchUser({
+                        type: 'login'
+                    })  
                     alert('Đăng nhập thành công')
-                    navigate('/admin')
+                    navigate('/')
                 }
             } catch (error) {
                 alert("Tài khoản không tồn tại")

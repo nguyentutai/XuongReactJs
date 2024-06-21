@@ -1,11 +1,37 @@
 import { Link } from 'react-router-dom'
 import styles from './listpro.module.scss'
 import IProducts from '../../../interfaces/IProducts'
-interface IProps {
-    data: IProducts[],
-    deletePro(id: number | string): void
-}
-const ListProduct = (props: IProps) => {
+import { useContext, useEffect } from 'react'
+import { ProductContext } from '../../../contexts/ProductProvider'
+
+const ListProduct = () => {
+    const { products, dispathProducts } = useContext(ProductContext);
+    useEffect(() => {
+        fetch('http://localhost:3000/products')
+            .then(response => response.json())
+            .then(data => {
+                dispathProducts({
+                    type: "SET_PRODUCT",
+                    payload: data
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [])
+    function deletePro(id: string) {
+        fetch('http://localhost:3000/products/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(() => {
+            dispathProducts({
+                type: "DELETE_PRODUCT",
+                payload: id
+            })
+        })
+    }
     return (
         <div className="container">
             <div className="bg-blue-700 w-44 text-center py-[9px] rounded mb-1">
@@ -36,7 +62,7 @@ const ListProduct = (props: IProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props?.data?.map((product: IProducts, index: number) => (
+                        {products?.map((product: IProducts, index: number) => (
                             <tr key={index} className={styles.table_header}>
                                 <td className="px-6 py-4">
                                     {index}
@@ -57,7 +83,7 @@ const ListProduct = (props: IProps) => {
                                     <Link to={`product-form/${product.id}`} className="bg-blue-600 px-2 py-1 ms-2 rounded text-white no-underline">Edit</Link>
                                     <button className="bg-red-600 px-2 py-1 ms-2 rounded text-white" onClick={() => {
                                         if (confirm("Are you sure you want to")) {
-                                            props.deletePro(product.id!);
+                                            deletePro(product.id! as string);
                                         }
                                     }}>Xóa</button>
                                 </td>
