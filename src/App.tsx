@@ -15,11 +15,11 @@ function App() {
     <>
       <main>
         <Routes>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route path="/" element={<LayoutWebsite />}>
             <Route index element={<Home />} />
             <Route path="home" element={<Navigate to="/" />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
           </Route>
           <Route path="/admin" element={<PrivateRouter />}>
             <Route path="/admin" element={<LayoutAdmin />}>
