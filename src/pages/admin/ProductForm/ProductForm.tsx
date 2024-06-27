@@ -59,39 +59,33 @@ const ProductForm = () => {
       default:
     }
     if (id) {
-      fetch("http://localhost:3000/products/" + id, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProduct),
-      }).then((res) =>
-        res.json().then((data) => {
+      try {
+        const { data } = await instance.put(`/products/${id}`, updatedProduct);
+        if (data) {
           dispathProducts({
             type: "UPDATE_PRODUCT",
-            payload: updatedProduct,
+            payload: data,
           });
-        })
-      );
-      alert("Cập nhật sản phẩm thành công");
-      navigate("/admin");
+          alert("Cập nhật sản phẩm thành công");
+          navigate("/admin");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
-      fetch("http://localhost:3000/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProduct),
-      }).then((res) =>
-        res.json().then((data) => {
+      try {
+        const { data } = await instance.post(`/products`, updatedProduct);
+        if (data) {
           dispathProducts({
             type: "ADD_PRODUCT",
             payload: updatedProduct,
           });
           alert("Thêm sản phẩm thành công");
-        })
-      );
-      navigate("/admin");
+          navigate("/admin");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (
@@ -170,7 +164,7 @@ const ProductForm = () => {
           </p>
           <div className="mb-3">
             <label htmlFor="thumbnailOption" className="form-label">
-              Choose Thumbnail Option
+              Tùy chọn upload ảnh
             </label>
             <select
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -178,14 +172,14 @@ const ProductForm = () => {
               value={thumbnailOption}
               onChange={(e) => setThumbnailOption(e.target.value)}
             >
-              <option value="keep">Keep Current Thumbnail</option>
-              <option value="link">Add Thumbnail from Link</option>
-              <option value="upload">Upload Thumbnail from Local</option>
+              <option value="keep">Giữ nguyên ảnh</option>
+              <option value="link">Đường dẫn ảnh</option>
+              <option value="upload">Upload từ local</option>
             </select>
           </div>
           <div className="mb-3">
             <label htmlFor="thumbnail" className="form-label">
-              Thumbnail
+              Ảnh
             </label>
             {thumbnailOption === "link" && (
               <input
