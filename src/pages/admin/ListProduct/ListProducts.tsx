@@ -8,7 +8,9 @@ const ListProduct = () => {
   const { products, dispathProducts } = useContext(ProductContext);
   const [fillterPro, setFilterPro] = useState<IProducts[]>([]);
   const [value, setValue] = useState("");
+
   const [arrange, setArrange] = useState("");
+
   useEffect(() => {
     fetch("http://localhost:3000/products")
       .then((response) => response.json())
@@ -23,6 +25,7 @@ const ListProduct = () => {
         console.log(error);
       });
   }, []);
+
   function deletePro(id: string) {
     fetch("http://localhost:3000/products/" + id, {
       method: "DELETE",
@@ -43,12 +46,14 @@ const ListProduct = () => {
         pro.title.toLowerCase().includes(value.toLowerCase())
       );
     }
+
     if (arrange === "ascending") {
       filterProduct.sort((a: IProducts, b: IProducts) => a.price - b.price);
     }
     if (arrange === "descending") {
       filterProduct.sort((a: IProducts, b: IProducts) => b.price - a.price);
     }
+
     setFilterPro(filterProduct);
   }, [value, arrange, products]);
   return (

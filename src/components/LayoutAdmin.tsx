@@ -29,7 +29,7 @@ const LayoutAdmin = () => {
           <Link to={""} className="flex no-underline items-center ps-2.5 mb-5">
             <img src="" className="h-6 me-3 sm:h-7" />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              No Name
+              TTShop
             </span>
           </Link>
           <ul className="space-y-2 font-medium">

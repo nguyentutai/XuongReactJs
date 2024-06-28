@@ -9,17 +9,19 @@ import ListProduct from "./pages/admin/Listproduct/ListProducts";
 import ProductForm from "./pages/admin/ProductForm/ProductForm";
 import Notfound from "./pages/Notfound";
 import PrivateRouter from "./components/PrivateRouter";
+import DetailPage from "./pages/DetailPage";
 
 function App() {
   return (
     <>
       <main>
         <Routes>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
           <Route path="/" element={<LayoutWebsite />}>
             <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
             <Route path="home" element={<Navigate to="/" />} />
+            <Route path="/product/:id" element={<DetailPage />} />
           </Route>
           <Route path="/admin" element={<PrivateRouter />}>
             <Route path="/admin" element={<LayoutAdmin />}>
